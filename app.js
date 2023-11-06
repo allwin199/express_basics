@@ -9,6 +9,7 @@ const adminRoutes = require("./routes/admin");
 const productRoutes = require("./routes/shop");
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public"))); // public dir is given read access
 
 app.use("/admin", adminRoutes);
 app.use(productRoutes);
