@@ -4,7 +4,7 @@ const path = require("path");
 
 const app = express();
 
-app.set("view engine", "pug");
+app.set("view engine", "ejs");
 app.set("views", "views");
 
 // Routes
@@ -18,7 +18,7 @@ app.use("/admin", adminData.routes);
 app.use(shop);
 
 app.use("/", (req, res) => {
-    res.status(404).render("404");
+    res.status(404).render("404", { pageTitle: "Page Not Found" });
 });
 
 app.listen(3000);
