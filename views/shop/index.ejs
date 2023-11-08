@@ -1,0 +1,33 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if(hasProducts) { %>
+            <div class="grid">
+                <% for(let product of prods) { %>
+                    <article class="card product-item">
+                        <header class="card__header">
+                            <h1 class="product__title"><%= product.title %></h1>
+                        </header>
+                        <div class="card__image">
+                            <img src="data:image/jpeg;base64,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" alt="A Book">
+                        </div>
+                        <div class="card__content">
+                            <h2 class="product__price">$19.99</h2>
+                            <p class="product__description">A very interesting book about so many even more interesting things!</p>
+                        </div>
+                        <div class="card__actions">
+                            <button class="btn">Add to Cart</button>
+                        </div>
+                    </article>
+                <% } %>
+            </div>
+        <% } else { %>
+            <h1> No products found</h1>
+        <% } %>
+    </main>
+<%- include('../includes/end.ejs') %>
