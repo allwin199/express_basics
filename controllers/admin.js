@@ -23,7 +23,6 @@ exports.getEditProduct = (req, res) => {
     const prodId = req.params.productId;
     const editMode = req.query.edit === "true" ? true : false;
     Product.findById(prodId, (product) => {
-        console.log("product", product);
         res.status(200).render("admin/edit-product", {
             product: product,
             pageTitle: "Edit Product",
@@ -52,15 +51,14 @@ exports.postEditProduct = (req, res) => {
 
 exports.postDeleteProduct = (req, res) => {
     const prodId = req.body.productId;
-    console.log("prodId", prodId);
-    // Product.deleteProduct(prodId, (products) => {
-    //     res.status(200).render("admin/products", {
-    //         prods: products,
-    //         pageTitle: "Admin Products",
-    //         path: "/admin/products",
-    //         hasProducts: products.length > 0,
-    //     });
-    // });
+    Product.deleteById(prodId, (products) => {
+        res.status(200).render("admin/products", {
+            prods: products,
+            pageTitle: "Admin Products",
+            path: "/admin/products",
+            hasProducts: products.length > 0,
+        });
+    });
 };
 
 exports.getProducts = (req, res) => {

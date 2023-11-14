@@ -35,7 +35,7 @@ module.exports = class Product {
                     console.log(err);
                 });
             } else {
-                this.id = Math.random();
+                this.id = Math.random().toString();
                 products.push(this);
                 fs.writeFile(p, JSON.stringify(products), (err) => {
                     console.log(err);
@@ -55,7 +55,7 @@ module.exports = class Product {
         });
     }
 
-    static deleteById(id) {
+    static deleteById(id, cb) {
         getProductsFromFile((products) => {
             const product = products.find((prod) => prod.id === id);
             const updatedProducts = products.filter((prod) => prod.id !== id);
@@ -64,7 +64,7 @@ module.exports = class Product {
                     cart.deleteProduct(id, product.price);
                 }
             });
-            cb(remainingProducts);
+            cb(updatedProducts);
         });
     }
 };
