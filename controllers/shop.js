@@ -2,24 +2,24 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 
 exports.getIndex = (req, res) => {
-    Product.fetchAll().then(([rows]) => {
+    Product.findAll().then((products) => {
         res.status(200).render("shop/index", {
-            prods: rows,
+            prods: products,
             pageTitle: "Shop",
             path: "/",
-            hasProducts: rows.length > 0,
+            hasProducts: products.length > 0,
         });
     });
 };
 
 exports.getProducts = (req, res) => {
-    Product.fetchAll()
-        .then(([rows]) => {
+    Product.findAll()
+        .then((products) => {
             res.status(200).render("shop/product-list", {
-                prods: rows,
+                prods: products,
                 pageTitle: "All Products",
                 path: "/products",
-                hasProducts: rows.length > 0,
+                hasProducts: products.length > 0,
             });
         })
         .catch((err) => console.log(err));
@@ -27,11 +27,11 @@ exports.getProducts = (req, res) => {
 
 exports.getProduct = (req, res) => {
     const prodId = req.params.productId;
-    Product.findById(prodId)
-        .then(([product]) => {
+    Product.findByPk(prodId)
+        .then((product) => {
             res.status(200).render("shop/product-detail", {
-                product: product[0],
-                pageTitle: product[0].title,
+                product: product,
+                pageTitle: product.title,
                 path: "/products",
             });
         })
