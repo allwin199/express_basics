@@ -13,10 +13,7 @@ module.exports = class Product {
     save() {}
 
     static fetchAll(cb) {
-        getProductsFromFile(cb);
-        db.execute("SELECT * FROM products")
-            .then((result) => console.log(result[0]))
-            .catch((err) => console.log(err));
+        return db.execute("SELECT * FROM products");
     }
 
     static findById(id, cb) {}
