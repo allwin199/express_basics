@@ -27,13 +27,15 @@ exports.getProducts = (req, res) => {
 
 exports.getProduct = (req, res) => {
     const prodId = req.params.productId;
-    Product.findById(prodId, (product) => {
-        res.status(200).render("shop/product-detail", {
-            product: product,
-            pageTitle: product.title,
-            path: "/products",
-        });
-    });
+    Product.findById(prodId)
+        .then(([product]) => {
+            res.status(200).render("shop/product-detail", {
+                product: product[0],
+                pageTitle: product[0].title,
+                path: "/products",
+            });
+        })
+        .catch((err) => console.log(err));
 };
 
 exports.getCart = (req, res) => {
