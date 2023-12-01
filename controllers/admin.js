@@ -30,6 +30,7 @@ exports.postAddProduct = (req, res) => {
 exports.getEditProduct = (req, res) => {
     const prodId = req.params.productId;
     const editMode = req.query.edit === "true" ? true : false;
+
     Product.findByPk(prodId)
         .then((product) => {
             res.status(200).render("admin/edit-product", {
@@ -75,7 +76,11 @@ exports.postDeleteProduct = (req, res) => {
 };
 
 exports.getProducts = (req, res) => {
-    Product.findAll()
+    Product.findAll({
+        where: {
+            userId: req.user.id,
+        },
+    })
         .then((products) => {
             res.status(200).render("admin/products", {
                 prods: products,
