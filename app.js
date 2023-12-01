@@ -20,9 +20,13 @@ const errorController = require("./controllers/error");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public"))); // public dir is given read access
 
-app.use((req, res) => {
+app.use((req, res, next) => {
     User.findByPk(1)
-        .then(() => {})
+        .then((user) => {
+            // console.log("user", user);
+            req.user = user;
+            next();
+        })
         .catch((err) => console.log(err));
 });
 
